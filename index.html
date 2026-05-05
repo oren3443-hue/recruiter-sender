@@ -1,0 +1,130 @@
+<!doctype html>
+<html dir="rtl" lang="he">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>שליחת הודעות גיוס</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<main class="app">
+  <header class="hdr">
+    <h1>📬 שליחת הודעות גיוס</h1>
+  </header>
+
+  <!-- View 1: login -->
+  <section id="view-login" class="view active">
+    <div class="card">
+      <h2>כניסה</h2>
+      <p class="muted">הקלידי את הסיסמה בפורמט <code>סביבה=סוד</code></p>
+      <label>
+        סיסמה
+        <input id="password" type="password" autocomplete="current-password"
+               placeholder="••••••••=••••••••" />
+      </label>
+      <div class="login-actions">
+        <button id="btn-load" class="primary">📋 בדוק לידים מהגיליון</button>
+        <button id="btn-manual" class="secondary">✍️ שליחה ידנית</button>
+      </div>
+      <p id="login-error" class="error" hidden></p>
+    </div>
+  </section>
+
+  <!-- View 2b: manual send -->
+  <section id="view-manual" class="view">
+    <div class="card">
+      <h2>שליחה ידנית</h2>
+
+      <label class="field">
+        <span>שמך (יופיע בהודעה)</span>
+        <input id="manual-sender-name" type="text" placeholder="לדוגמה: מאיה" />
+      </label>
+
+      <h3>נמענים <span id="manual-count" class="pill">0</span></h3>
+      <p class="muted">כל שורה = הודעה אחת. הטלפון יכול להיות בכל פורמט (0501234567 / +972501234567 / 972501234567).</p>
+
+      <div id="manual-rows" class="manual-rows"></div>
+
+      <button type="button" id="btn-add-row" class="ghost">➕ הוסף נמען</button>
+
+      <button id="btn-manual-send" class="primary" disabled>שלח הודעות</button>
+      <p id="manual-hint" class="muted"></p>
+      <p id="manual-error" class="error" hidden></p>
+
+      <button type="button" id="btn-manual-back" class="ghost">⟵ חזרה</button>
+    </div>
+  </section>
+
+  <!-- View 2: pick + send -->
+  <section id="view-pick" class="view">
+    <div class="card">
+      <h2>בחירת לידים</h2>
+
+      <label class="field">
+        <span>שמך (יופיע בהודעה)</span>
+        <input id="sender-name" type="text" placeholder="לדוגמה: מאיה" />
+      </label>
+
+      <h3>מיפוי משרות</h3>
+      <p class="muted">לכל שם משרה גולמי מהגיליון – רשמי איך שיופיע בהודעה ללידים.</p>
+      <div id="job-mapping" class="mapping"></div>
+
+      <h3>לידים פנויים <span id="leads-count" class="pill"></span></h3>
+      <div class="bulk">
+        <button type="button" id="btn-select-all" class="ghost">בחר הכל</button>
+        <button type="button" id="btn-clear" class="ghost">נקה</button>
+        <span id="selected-count" class="muted"></span>
+      </div>
+      <div class="leads-table">
+        <table>
+          <thead>
+            <tr>
+              <th></th>
+              <th>שם</th>
+              <th>טלפון</th>
+              <th>משרה (גולמי)</th>
+              <th>עיר</th>
+            </tr>
+          </thead>
+          <tbody id="leads-body"></tbody>
+        </table>
+      </div>
+
+      <button id="btn-send" class="primary" disabled>שלח הודעות</button>
+      <p id="send-hint" class="muted"></p>
+      <p id="send-error" class="error" hidden></p>
+    </div>
+  </section>
+
+  <!-- View 3: results -->
+  <section id="view-result" class="view">
+    <div class="card">
+      <h2>דו"ח שליחה</h2>
+      <p id="result-summary" class="summary"></p>
+      <div class="leads-table">
+        <table>
+          <thead>
+            <tr>
+              <th>שם</th>
+              <th>סטטוס</th>
+              <th>פירוט</th>
+            </tr>
+          </thead>
+          <tbody id="result-body"></tbody>
+        </table>
+      </div>
+      <button id="btn-back" class="ghost">חזור</button>
+    </div>
+  </section>
+
+  <div id="loader" class="loader" hidden>
+    <div class="spinner"></div>
+    <p id="loader-msg">טוען…</p>
+  </div>
+</main>
+<script src="app.js"></script>
+</body>
+</html>
