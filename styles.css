@@ -458,6 +458,7 @@ input[type=checkbox] {
 
 .status-ok { color: var(--success); font-weight: 700; }
 .status-fail { color: var(--error); font-weight: 700; }
+.status-skip { color: #d97706; font-weight: 700; }
 
 .loader {
   position: fixed;

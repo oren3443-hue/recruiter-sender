@@ -483,9 +483,10 @@ async function sendMessages() {
 // ============================================================
 
 function renderResultView(data) {
-  const summary = data.summary || { sent: 0, failed: 0 };
-  document.getElementById('result-summary').textContent =
-    `נשלחו ${summary.sent} • נכשלו ${summary.failed}`;
+  const summary = data.summary || { sent: 0, failed: 0, skipped: 0 };
+  let summaryText = `נשלחו ${summary.sent} • נכשלו ${summary.failed}`;
+  if (summary.skipped) summaryText += ` • דולגו ${summary.skipped}`;
+  document.getElementById('result-summary').textContent = summaryText;
   const body = document.getElementById('result-body');
   body.innerHTML = '';
   (data.results || []).forEach(r => {
@@ -495,6 +496,8 @@ function renderResultView(data) {
     const tdStatus = document.createElement('td');
     if (r.status === 'sent') {
       tdStatus.innerHTML = '<span class="status-ok">✓ נשלח</span>';
+    } else if (r.status === 'skipped') {
+      tdStatus.innerHTML = '<span class="status-skip">⊘ דולג</span>';
     } else {
       tdStatus.innerHTML = '<span class="status-fail">✗ נכשל</span>';
     }
