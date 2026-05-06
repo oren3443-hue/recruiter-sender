@@ -204,6 +204,198 @@ button.secondary:hover { background: #e5e7eb; }
   flex-wrap: wrap;
 }
 
+/* Tabs */
+.tabs {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  border-bottom: 1px solid var(--border);
+  margin: -8px -8px 16px;
+  padding: 0 8px;
+  flex-wrap: wrap;
+}
+.tab {
+  background: transparent;
+  color: var(--muted);
+  border: none;
+  border-bottom: 3px solid transparent;
+  border-radius: 0;
+  padding: 10px 14px;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: -1px;
+}
+.tab:hover { color: var(--ink); background: #f9fafb; }
+.tab.active {
+  color: var(--primary);
+  border-bottom-color: var(--primary);
+}
+.tab[hidden] { display: none; }
+.tabs .logout {
+  margin-inline-start: auto;
+  font-size: 13px;
+}
+.tabpanel { display: none; }
+.tabpanel.active { display: block; }
+
+/* Filters row */
+.filters {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 8px 0 12px;
+  padding: 10px;
+  background: #f9fafb;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+.filters input[type=search] {
+  flex: 1 1 220px;
+  min-width: 180px;
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: inherit;
+  margin: 0;
+  background: #fff;
+}
+.filters input[type=search]:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(79,70,229,.18);
+}
+
+/* Role multi-select dropdown */
+.role-filter {
+  position: relative;
+  min-width: 180px;
+}
+.role-filter > summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #fff;
+  font-size: 14px;
+  font-weight: 500;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.role-filter > summary::-webkit-details-marker { display: none; }
+.role-filter > summary::after {
+  content: '▾';
+  color: var(--muted);
+  font-size: 12px;
+}
+.role-filter[open] > summary {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(79,70,229,.18);
+}
+.role-options {
+  position: absolute;
+  top: calc(100% + 4px);
+  inset-inline-start: 0;
+  min-width: 100%;
+  max-height: 280px;
+  overflow-y: auto;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  box-shadow: 0 6px 18px rgba(0,0,0,.08);
+  padding: 6px;
+  z-index: 10;
+}
+.role-options-actions {
+  display: flex;
+  gap: 8px;
+  padding: 6px 8px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 4px;
+}
+.link-btn {
+  background: none;
+  border: none;
+  color: var(--primary);
+  cursor: pointer;
+  padding: 2px 4px;
+  font-size: 13px;
+  font-weight: 600;
+}
+.link-btn:hover { text-decoration: underline; }
+.role-opt {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  margin: 0;
+  font-weight: 400;
+  font-size: 14px;
+}
+.role-opt:hover { background: #f3f4f6; }
+.role-opt input[type=checkbox] {
+  width: 16px;
+  height: 16px;
+  margin: 0;
+}
+.date-presets {
+  display: inline-flex;
+  gap: 4px;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 3px;
+}
+.date-btn {
+  background: transparent;
+  color: var(--muted);
+  border: none;
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-size: 13px;
+  font-weight: 600;
+}
+.date-btn:hover { background: #f3f4f6; color: var(--ink); }
+.date-btn.active {
+  background: var(--primary);
+  color: #fff;
+}
+#filter-summary {
+  margin-inline-start: auto;
+  font-size: 13px;
+}
+
+/* Time column */
+.col-time {
+  white-space: nowrap;
+  color: var(--muted);
+  font-size: 13px;
+}
+tbody tr.checked .col-time { color: var(--ink); }
+
+/* Phone column */
+.col-phone {
+  direction: ltr;
+  text-align: start;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+  font-size: 13px;
+}
+@media (max-width: 600px) {
+  .filters { flex-direction: column; align-items: stretch; }
+  .filters input[type=search],
+  .filters select { width: 100%; }
+  #filter-summary { margin-inline-start: 0; }
+}
+
 .mapping {
   display: grid;
   grid-template-columns: 1fr 1fr;

@@ -4,6 +4,8 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>שליחת הודעות גיוס</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg" />
+<meta name="theme-color" content="#4f46e5" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700;900&display=swap" rel="stylesheet">
@@ -26,97 +28,119 @@
                placeholder="••••••••=••••••••" />
       </label>
       <div class="login-actions">
-        <button id="btn-load" class="primary">📋 בדוק לידים מהגיליון</button>
-        <button id="btn-manual" class="secondary">✍️ שליחה ידנית</button>
+        <button id="btn-enter" class="primary">כניסה</button>
       </div>
       <p id="login-error" class="error" hidden></p>
     </div>
   </section>
 
-  <!-- View 2b: manual send -->
-  <section id="view-manual" class="view">
+  <!-- View 2: app (tabs) -->
+  <section id="view-app" class="view">
     <div class="card">
-      <h2>שליחה ידנית</h2>
-
-      <label class="field">
-        <span>שמך (יופיע בהודעה)</span>
-        <input id="manual-sender-name" type="text" placeholder="לדוגמה: מאיה" />
-      </label>
-
-      <h3>נמענים <span id="manual-count" class="pill">0</span></h3>
-      <p class="muted">כל שורה = הודעה אחת. הטלפון יכול להיות בכל פורמט (0501234567 / +972501234567 / 972501234567).</p>
-
-      <div id="manual-rows" class="manual-rows"></div>
-
-      <button type="button" id="btn-add-row" class="ghost">➕ הוסף נמען</button>
-
-      <button id="btn-manual-send" class="primary" disabled>שלח הודעות</button>
-      <p id="manual-hint" class="muted"></p>
-      <p id="manual-error" class="error" hidden></p>
-
-      <button type="button" id="btn-manual-back" class="ghost">⟵ חזרה</button>
-    </div>
-  </section>
-
-  <!-- View 2: pick + send -->
-  <section id="view-pick" class="view">
-    <div class="card">
-      <h2>בחירת לידים</h2>
-
-      <label class="field">
-        <span>שמך (יופיע בהודעה)</span>
-        <input id="sender-name" type="text" placeholder="לדוגמה: מאיה" />
-      </label>
-
-      <h3>מיפוי משרות</h3>
-      <p class="muted">לכל שם משרה גולמי מהגיליון – רשמי איך שיופיע בהודעה ללידים.</p>
-      <div id="job-mapping" class="mapping"></div>
-
-      <h3>לידים פנויים <span id="leads-count" class="pill"></span></h3>
-      <div class="bulk">
-        <button type="button" id="btn-select-all" class="ghost">בחר הכל</button>
-        <button type="button" id="btn-clear" class="ghost">נקה</button>
-        <span id="selected-count" class="muted"></span>
-      </div>
-      <div class="leads-table">
-        <table>
-          <thead>
-            <tr>
-              <th></th>
-              <th>שם</th>
-              <th>טלפון</th>
-              <th>משרה (גולמי)</th>
-              <th>עיר</th>
-            </tr>
-          </thead>
-          <tbody id="leads-body"></tbody>
-        </table>
+      <div class="tabs" role="tablist">
+        <button id="tab-sheet" class="tab active" role="tab" data-tab="sheet">📋 מהגיליון</button>
+        <button id="tab-manual" class="tab" role="tab" data-tab="manual">✍️ ידני</button>
+        <button id="tab-result" class="tab" role="tab" data-tab="result" hidden>📊 תוצאות אחרונות</button>
+        <button id="btn-logout" class="ghost logout" type="button">יציאה</button>
       </div>
 
-      <button id="btn-send" class="primary" disabled>שלח הודעות</button>
-      <p id="send-hint" class="muted"></p>
-      <p id="send-error" class="error" hidden></p>
-    </div>
-  </section>
+      <!-- Tab: from sheet -->
+      <div id="panel-sheet" class="tabpanel active" role="tabpanel">
+        <label class="field">
+          <span>שמך (יופיע בהודעה)</span>
+          <input id="sender-name" type="text" placeholder="לדוגמה: מאיה" />
+        </label>
 
-  <!-- View 3: results -->
-  <section id="view-result" class="view">
-    <div class="card">
-      <h2>דו"ח שליחה</h2>
-      <p id="result-summary" class="summary"></p>
-      <div class="leads-table">
-        <table>
-          <thead>
-            <tr>
-              <th>שם</th>
-              <th>סטטוס</th>
-              <th>פירוט</th>
-            </tr>
-          </thead>
-          <tbody id="result-body"></tbody>
-        </table>
+        <h3>מיפוי משרות</h3>
+        <p class="muted">לכל שם משרה גולמי מהגיליון – אפשר לרשום איך שיופיע בהודעה. אם תשאירי ריק – יישלח השם הגולמי.</p>
+        <div id="job-mapping" class="mapping"></div>
+
+        <h3>לידים פנויים <span id="leads-count" class="pill"></span></h3>
+
+        <div class="filters">
+          <input id="filter-search" type="search" placeholder="חיפוש (שם / טלפון / עיר / תפקיד)" />
+          <details id="filter-role-wrap" class="role-filter">
+            <summary id="filter-role-summary">כל התפקידים</summary>
+            <div class="role-options">
+              <div class="role-options-actions">
+                <button type="button" class="link-btn" id="roles-all">בחר הכל</button>
+                <button type="button" class="link-btn" id="roles-none">נקה</button>
+              </div>
+              <div id="filter-role-list"></div>
+            </div>
+          </details>
+          <div class="date-presets" role="radiogroup" aria-label="פילטר תאריך">
+            <button type="button" class="date-btn" data-range="today">היום</button>
+            <button type="button" class="date-btn" data-range="7">7 ימים</button>
+            <button type="button" class="date-btn" data-range="30">30 ימים</button>
+            <button type="button" class="date-btn active" data-range="all">הכל</button>
+          </div>
+          <button id="btn-refresh" type="button" class="ghost" title="טען לידים מחדש מהגיליון">🔄 רענן</button>
+          <span id="filter-summary" class="muted"></span>
+        </div>
+
+        <div class="bulk">
+          <button type="button" id="btn-select-all" class="ghost">בחר הכל</button>
+          <button type="button" id="btn-clear" class="ghost">נקה</button>
+          <span id="selected-count" class="muted"></span>
+        </div>
+        <div class="leads-table">
+          <table>
+            <thead>
+              <tr>
+                <th></th>
+                <th>שם</th>
+                <th>טלפון</th>
+                <th>משרה (גולמי)</th>
+                <th>נכנס</th>
+                <th>עיר</th>
+              </tr>
+            </thead>
+            <tbody id="leads-body"></tbody>
+          </table>
+        </div>
+
+        <button id="btn-send" class="primary" disabled>שלח הודעות</button>
+        <p id="send-hint" class="muted"></p>
+        <p id="send-error" class="error" hidden></p>
       </div>
-      <button id="btn-back" class="ghost">חזור</button>
+
+      <!-- Tab: manual -->
+      <div id="panel-manual" class="tabpanel" role="tabpanel" hidden>
+        <label class="field">
+          <span>שמך (יופיע בהודעה)</span>
+          <input id="manual-sender-name" type="text" placeholder="לדוגמה: מאיה" />
+        </label>
+
+        <h3>נמענים <span id="manual-count" class="pill">0</span></h3>
+        <p class="muted">כל שורה = הודעה אחת. הטלפון יכול להיות בכל פורמט (0501234567 / +972501234567 / 972501234567).</p>
+
+        <div id="manual-rows" class="manual-rows"></div>
+
+        <button type="button" id="btn-add-row" class="ghost">➕ הוסף נמען</button>
+
+        <button id="btn-manual-send" class="primary" disabled>שלח הודעות</button>
+        <p id="manual-hint" class="muted"></p>
+        <p id="manual-error" class="error" hidden></p>
+      </div>
+
+      <!-- Tab: result -->
+      <div id="panel-result" class="tabpanel" role="tabpanel" hidden>
+        <h2>דו"ח שליחה אחרון</h2>
+        <p id="result-summary" class="summary"></p>
+        <div class="leads-table">
+          <table>
+            <thead>
+              <tr>
+                <th>שם</th>
+                <th>סטטוס</th>
+                <th>פירוט</th>
+              </tr>
+            </thead>
+            <tbody id="result-body"></tbody>
+          </table>
+        </div>
+      </div>
     </div>
   </section>
 
